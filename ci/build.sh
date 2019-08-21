@@ -3,9 +3,16 @@ set -x
 set -e
 
 VERSION=$1
+BUILD=$2
+
 if [[ -z "$VERSION" ]]
 then
     VERSION=centos7_4_2_6
+fi
+
+if [[ -z "$BUILD" ]]
+then
+    BUILD=0
 fi
 
 IRODS_VERSION=$( echo $VERSION | awk 'BEGIN{ FS="_"; }{ print $2"."$3"."$4; }' )

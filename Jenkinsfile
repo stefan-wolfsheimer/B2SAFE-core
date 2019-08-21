@@ -1,9 +1,6 @@
 pipeline
 {
     agent any
-    parameters {
-        string(name: 'prefix', defaultValue: "", description: 'Prefix for target yum repo')
-    }
     environment {
         REPO_PREFIX = 'test_'
         YUM_SERVER = 'software@software.irodspoc-sara.surf-hosted.nl'
@@ -24,7 +21,7 @@ pipeline
                 echo '----------------------------'
                 echo 'Building against iRODS 4.2.6'
                 echo '----------------------------'
-                sh './ci/build.sh centos7_4_2_6'
+                sh './ci/build.sh centos7_4_2_6 $BUILD_NUMBER'
 
             }
         }
@@ -40,7 +37,7 @@ pipeline
                 echo '-----------------------------'
                 echo 'Building against iRODS 4.1.12'
                 echo '-----------------------------'
-                sh './ci/build.sh centos7_4_1_12'
+                sh './ci/build.sh centos7_4_1_12  $BUILD_NUMBER'
             }
 
         }
@@ -51,7 +48,7 @@ pipeline
                 echo '----------------------------'
                 echo 'Testing against iRODS 4.2.6 '
                 echo '----------------------------'
-                echo './ci/test.sh centos7_4_2_6'
+                echo './ci/test.sh centos7_4_2_6  $BUILD_NUMBER'
             }
         }
         stage('Test_4_1_12')
@@ -61,7 +58,7 @@ pipeline
                 echo '-----------------------------'
                 echo 'Testing against iRODS 4.1.12'
                 echo '-----------------------------'
-                echo './ci/test.sh centos7_4_1_12'
+                echo './ci/test.sh centos7_4_1_12  $BUILD_NUMBER'
             }
         }
 
@@ -71,7 +68,7 @@ pipeline
             {
                 echo '------------------------------'
                 echo 'Deploying.'
-                sh './ci/deploy.sh centos7_4_1_12'
+                sh './ci/deploy.sh centos7_4_1_12  $BUILD_NUMBER'
            }
         }
     }
