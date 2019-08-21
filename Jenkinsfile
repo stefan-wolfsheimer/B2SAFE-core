@@ -47,7 +47,7 @@ pipeline
                 echo '----------------------------'
                 echo 'Testing against iRODS 4.2.6 '
                 echo '----------------------------'
-                sh './ci/test.sh centos7_4_2_6'
+                echo './ci/test.sh centos7_4_2_6'
             }
         }
         stage('Test_4_1_12')
@@ -57,7 +57,7 @@ pipeline
                 echo '-----------------------------'
                 echo 'Testing against iRODS 4.1.12'
                 echo '-----------------------------'
-                sh './ci/test.sh centos7_4_1_12'
+                echo './ci/test.sh centos7_4_1_12'
             }
         }
 
@@ -67,7 +67,7 @@ pipeline
             {
                 echo '------------------------------'
                 echo 'Deploying.'
-                echo 'scp $SSH_OPTIONS ./ci/RPMS/Centos/7/irods-4.1.12/*.rpm $YUM_SERVER:~/'
+                echo 'echo $SSH_OPTIONS ./ci/RPMS/Centos/7/irods-4.1.12/*.rpm $YUM_SERVER:~/'
            }
         }
     }
