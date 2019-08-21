@@ -30,5 +30,6 @@ mkdir -p ci/RPMS/Centos/7/irods-${IRODS_VERSION}
 docker-compose -f ci/${VERSION}/docker-compose.yml build
 docker-compose -f ci/${VERSION}/docker-compose.yml up -d
 
-docker exec ${VERSION}_icat_1 /app/create_rpm.sh
-docker exec ${VERSION}_icat_1 bash -c "set -x; set -e; cp /var/lib/irods/rpmbuild/RPMS/noarch/*.rpm /build/ci/RPMS/Centos/7/irods-${IRODS_VERSION};" 
+docker exec ${VERSION}_icat_1 /app/create_rpm.sh $BUILD
+
+docker exec ${VERSION}_icat_1 bash -c "set -x; set -e; cp /var/lib/irods/rpmbuild/RPMS/noarch/*-${BUILD}.noarch.rpm /build/ci/RPMS/Centos/7/irods-${IRODS_VERSION};" 
