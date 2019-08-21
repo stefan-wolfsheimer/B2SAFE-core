@@ -67,7 +67,7 @@ pipeline
             {
                 echo '------------------------------'
                 echo 'Deploying.'
-                sh 'echo $SSH_OPTIONS ./ci/RPMS/Centos/7/irods-4.1.12/*.rpm $YUM_SERVER:~/'
+                sh 'scp $SSH_OPTIONS ./ci/RPMS/Centos/7/irods-4.1.12/*.rpm $YUM_SERVER:~/'
            }
         }
     }
