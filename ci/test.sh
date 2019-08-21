@@ -3,6 +3,7 @@
 # default version
 VERSION=centos7_4_2_6
 CLEANUP="yes"
+BUILD=0
 
 while [[ $# -gt 0 ]]
 do
@@ -20,6 +21,11 @@ do
         "--branch")
             shift
             GIT_BRANCH=$1
+            shift
+            ;;
+        "--build")
+            shift
+            BUILD=$1
             shift
             ;;
         *)
@@ -48,12 +54,14 @@ trap cleanup EXIT ERR INT TERM
 docker-compose -f ci/${VERSION}/docker-compose.yml build
 docker-compose -f ci/${VERSION}/docker-compose.yml up -d
 
+set +x
 source $(cd `dirname "${BASH_SOURCE[0]}"` && pwd)/version.sh
 RPM_PACKAGE=`rpm_package $BUILD `
 IRODS_VERSION=`irods_version $VERSION`
 REPO_NAME=`repo_name $VERSION $GIT_URL $GIT_BRANCH `
 EXEC="docker exec ${VERSION}_icat_1"
 EXEC_IRODS="docker exec -u irods ${VERSION}_icat_1 "
+set -x
 
 # copy source tree
 $EXEC cp -r /build /src/B2SAFE-core

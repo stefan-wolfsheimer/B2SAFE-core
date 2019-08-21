@@ -1,27 +1,49 @@
 #!/bin/bash
-set -x
-set -e
 
-VERSION=$1
-BUILD=$2
-GIT_URL=$3
-GIT_BRANCH=$4
+VERSION=centos7_4_2_6
+CLEANUP="yes"
+BUILD=0
+GIT_BRANCH=""
+GIT_URL=""
 
-if [[ -z "$VERSION" ]]
-then
-    VERSION=centos7_4_2_6
-fi
-
-if [[ -z "$BUILD" ]]
-then
-    BUILD=0
-fi
+while [[ $# -gt 0 ]]
+do
+    key="$1"
+    case $key in
+        "--nocleanup")
+            CLEANUP="no"
+            shift
+            ;;
+        "--url")
+            shift
+            GIT_URL=$1
+            shift
+            ;;
+        "--branch")
+            shift
+            GIT_BRANCH=$1
+            shift
+            ;;
+        "--build")
+            shift
+            BUILD=$1
+            shift
+            ;;
+        *)
+            VERSION=$1
+            shift
+            ;;
+    esac
+done
 
 cleanup () {
     exit_code=$?
     docker-compose -f ci/${VERSION}/docker-compose.yml down -v
     exit $exit_code
 }
+
+set -x
+set -e
 
 trap cleanup EXIT ERR INT TERM
 
