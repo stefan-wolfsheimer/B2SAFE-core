@@ -81,7 +81,6 @@ $EXEC cp /build/ci/secret/epic2_credentials /src/B2SAFE-core/scripts/tests/resou
 $EXEC /app/update_install.py /opt/eudat/b2safe/packaging/install.json /build/ci/secret/install.json
 $EXEC_IRODS bash -c "cd /opt/eudat/b2safe/packaging/ ; python install.py;"
 
-exit 0
 # execute tests
 for t in epic2 irods b2safe
 do
