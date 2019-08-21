@@ -2,6 +2,8 @@
 
 VERSION=$1
 BUILD=$2
+GIT_URL=$3
+GIT_BRANCH=$4
 
 if [[ -z "$VERSION" ]]
 then
@@ -13,13 +15,13 @@ then
     BUILD=0
 fi
 
-echo $BUILD_NUMBER
-echo $GIT_BRANCH
-echo $GIT_URL
 
+source $(cd `dirname "${BASH_SOURCE[0]}"` && pwd)/version.sh
+RPM_PACKAGE=`rpm_package $BUILD `
+IRODS_VERSION=`irods_version $VERSION`
+REPO_PREFIX=`repo_prefix $GIT_URL $GIT_BRANCH `
+REPO_NAME=${REPO_PREFIX}irods-${IRODS_VERSION}
 
-echo ssh $SSH_OPTIONS $YUM_SERVER "mkdir -p /repos/CentOS/7/${REPO_PREFIX}irods-4.1.12/Packages/"
-echo scp $SSH_OPTIONS ./ci/RPMS/Centos/7/irods-4.1.12/*.rpm $YUM_SERVER:/repos/CentOS/7/${REPO_PREFIX}irods-4.1.12/Packages/
-echo ssh $SSH_OPTIONS $YUM_SERVER createrepo --update /repos/CentOS/7/${REPO_PREFIX}irods-4.1.12
-
-printenv
+echo ssh $SSH_OPTIONS $YUM_SERVER "mkdir -p /repos/CentOS/7/${REPO_NAME}/Packages/"
+echo scp $SSH_OPTIONS ./ci/RPMS/Centos/7/${REPO_NAME}/${RPM_PACKAGE} $YUM_SERVER:/repos/CentOS/7/${REPO_NAME}/Packages/
+echo ssh $SSH_OPTIONS $YUM_SERVER createrepo --update /repos/CentOS/7/${REPO_NAME}

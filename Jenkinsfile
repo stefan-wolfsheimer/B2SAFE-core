@@ -3,9 +3,8 @@ pipeline
     agent any
     environment {
         BUILD_NUMBER = "${env.BUILD_NUMBER}"
-        REPO_PREFIX = 'test_'
-        YUM_SERVER = 'software@software.irodspoc-sara.surf-hosted.nl'
-        SSH_OPTIONS = '-oStrictHostKeyChecking=no'
+        GIT_URL = "${env.GIT_URL}"
+        GIT_BRANCH = "${env.GIT_BRANCH}"
     }
 
     stages
@@ -22,7 +21,7 @@ pipeline
                 echo '----------------------------'
                 echo 'Building against iRODS 4.2.6'
                 echo '----------------------------'
-                sh './ci/build.sh centos7_4_2_6 ${BUILD_NUMBER}'
+                sh './ci/build.sh centos7_4_2_6 ${BUILD_NUMBER} ${GIT_URL} ${GIT_BRANCH}' 
 
             }
         }
@@ -38,7 +37,7 @@ pipeline
                 echo '-----------------------------'
                 echo 'Building against iRODS 4.1.12'
                 echo '-----------------------------'
-                sh './ci/build.sh centos7_4_1_12  ${BUILD_NUMBER}'
+                sh './ci/build.sh centos7_4_1_12  ${BUILD_NUMBER}  ${GIT_URL} ${GIT_BRANCH}'
             }
 
         }
@@ -49,7 +48,7 @@ pipeline
                 echo '----------------------------'
                 echo 'Testing against iRODS 4.2.6 '
                 echo '----------------------------'
-                echo './ci/test.sh centos7_4_2_6  ${BUILD_NUMBER}'
+                echo './ci/test.sh centos7_4_2_6  ${BUILD_NUMBER}  ${GIT_URL} ${GIT_BRANCH}'
             }
         }
         stage('Test_4_1_12')
@@ -59,7 +58,7 @@ pipeline
                 echo '-----------------------------'
                 echo 'Testing against iRODS 4.1.12'
                 echo '-----------------------------'
-                echo './ci/test.sh centos7_4_1_12  ${BUILD_NUMBER}'
+                echo './ci/test.sh centos7_4_1_12  ${BUILD_NUMBER}  ${GIT_URL} ${GIT_BRANCH}'
             }
         }
 
@@ -69,7 +68,7 @@ pipeline
             {
                 echo '------------------------------'
                 echo 'Deploying.'
-                sh './ci/deploy.sh centos7_4_1_12  ${BUILD_NUMBER}'
+                sh './ci/deploy.sh centos7_4_1_12  ${BUILD_NUMBER}  ${GIT_URL} ${GIT_BRANCH}'
            }
         }
     }
