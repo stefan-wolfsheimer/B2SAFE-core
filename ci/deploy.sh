@@ -19,8 +19,7 @@ fi
 source $(cd `dirname "${BASH_SOURCE[0]}"` && pwd)/version.sh
 RPM_PACKAGE=`rpm_package $BUILD `
 IRODS_VERSION=`irods_version $VERSION`
-REPO_PREFIX=`repo_prefix $GIT_URL $GIT_BRANCH `
-REPO_NAME=${REPO_PREFIX}irods-${IRODS_VERSION}
+REPO_NAME=`repo_name $VERSION $GIT_URL $GIT_BRANCH `
 
 echo ssh $SSH_OPTIONS $YUM_SERVER "mkdir -p /repos/CentOS/7/${REPO_NAME}/Packages/"
 echo scp $SSH_OPTIONS ./ci/RPMS/Centos/7/${REPO_NAME}/${RPM_PACKAGE} $YUM_SERVER:/repos/CentOS/7/${REPO_NAME}/Packages/
