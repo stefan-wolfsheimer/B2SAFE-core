@@ -2,6 +2,7 @@ pipeline
 {
     agent any
     environment {
+        BUILD_NUMBER = "${env.BUILD_NUMBER}"
         REPO_PREFIX = 'test_'
         YUM_SERVER = 'software@software.irodspoc-sara.surf-hosted.nl'
         SSH_OPTIONS = '-oStrictHostKeyChecking=no'
