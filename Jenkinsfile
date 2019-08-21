@@ -1,6 +1,10 @@
 pipeline
 {
     agent any
+    environment {
+        YUM_SERVER = 'software@software.irodspoc-sara.surf-hosted.nl'
+        SSH_OPTIONS = '-oStrictHostKeyChecking=no'
+    }
 
     stages
     {
@@ -57,11 +61,13 @@ pipeline
             }
         }
 
-        stage('Deploy')
+        stage('Deploy_4_1_12')
         {
             steps
             {
-                echo 'Deploying....'
+                echo '------------------------------'
+                echo 'Deploying.'
+                echo 'scp $SSH_OPTIONS ./ci/RPMS/Centos/7/irods-4.1.12/*.rpm $YUM_SERVER:~/'
            }
         }
     }
