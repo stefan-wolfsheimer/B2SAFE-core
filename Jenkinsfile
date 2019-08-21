@@ -5,6 +5,8 @@ pipeline
         BUILD_NUMBER = "${env.BUILD_NUMBER}"
         GIT_URL = "${env.GIT_URL}"
         GIT_BRANCH = "${env.GIT_BRANCH}"
+        YUM_SERVER = 'software@software.irodspoc-sara.surf-hosted.nl'
+        SSH_OPTIONS = '-oStrictHostKeyChecking=no'
     }
 
     stages
@@ -48,7 +50,7 @@ pipeline
                 echo '----------------------------'
                 echo 'Testing against iRODS 4.2.6 '
                 echo '----------------------------'
-                echo './ci/test.sh centos7_4_2_6  ${BUILD_NUMBER}  ${GIT_URL} ${GIT_BRANCH}'
+                sh './ci/test.sh centos7_4_2_6  ${BUILD_NUMBER}  --url ${GIT_URL} --branch ${GIT_BRANCH}'
             }
         }
         stage('Test_4_1_12')
@@ -58,7 +60,7 @@ pipeline
                 echo '-----------------------------'
                 echo 'Testing against iRODS 4.1.12'
                 echo '-----------------------------'
-                echo './ci/test.sh centos7_4_1_12  ${BUILD_NUMBER}  ${GIT_URL} ${GIT_BRANCH}'
+                sh './ci/test.sh centos7_4_1_12  ${BUILD_NUMBER}  --url ${GIT_URL} --branch ${GIT_BRANCH}'
             }
         }
 
