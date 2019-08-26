@@ -73,5 +73,14 @@ pipeline
                 sh './ci/deploy.sh centos7_4_1_12  --build ${BUILD_NUMBER}  --url ${GIT_URL} --branch ${GIT_BRANCH}'
            }
         }
-    }
+        stage('Deploy_4_2_6')
+        {
+            steps
+            {
+                echo '------------------------------'
+                echo 'Deploying.'
+                sh './ci/deploy.sh centos7_4_2_6  --build ${BUILD_NUMBER}  --url ${GIT_URL} --branch ${GIT_BRANCH}'
+           }
+        }
+     }
 }
