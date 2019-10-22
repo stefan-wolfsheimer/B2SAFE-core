@@ -133,3 +133,4 @@ B2SAFE module 2.0 [2014/04/13]
 - added a new authorization mechanism
 
 
+TESTED AGAIN
